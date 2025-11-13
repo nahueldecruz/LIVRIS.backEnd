@@ -1,0 +1,16 @@
+CREATE TABLE Comments (
+    _id INT AUTO_INCREMENT PRIMARY KEY,
+    review_id INT NOT NULL,
+    user_id INT NOT NULL,
+    parent_comment_id INT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (review_id) REFERENCES reviews(_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(_id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (parent_comment_id) REFERENCES comments(_id)
+        ON UPDATE CASCADE ON DELETE CASCADE
+)

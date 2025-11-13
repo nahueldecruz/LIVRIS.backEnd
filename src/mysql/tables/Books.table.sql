@@ -1,0 +1,12 @@
+CREATE TABLE Books (
+    _id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    author_name VARCHAR(100),
+    description TEXT,
+    published_year SMALLINT,
+    category VARCHAR(100),
+    cover_url VARCHAR(255),
+    api_id VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
