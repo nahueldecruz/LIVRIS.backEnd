@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { request } from 'express'
 import cors from 'cors'
 import authRouter from './routes/auth.route.js'
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware.js'
@@ -13,6 +13,7 @@ app.use(express.json())
 
 app.use(cors())
 
+app.get('/', (request, response) => { response.send('Bienvenido a la API de LiVris') })
 
 app.use('/api/auth', authRouter)
 

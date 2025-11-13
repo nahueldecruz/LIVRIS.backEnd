@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "ba877736-1c05-43e9-bbf2-2724280af273",
+		"name": "LIVRIS_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48433707",
+		"_collection_link": "https://nahueldecruz-2937988.postman.co/workspace/test_slack~059f34a5-c382-4e90-8bcb-7d172e22b1c9/collection/48433707-ba877736-1c05-43e9-bbf2-2724280af273?action=share&source=collection_link&creator=48433707"
+	},
+	"item": [
+		{
+			"name": "/api/auth",
+			"item": [
+				{
+					"name": "REGISTRAR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nahuel NAhuel\",\r\n    \"email\": \"nahuelnahuel@gmail.com\",\r\n    \"password\": \"12345678N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/auth/register",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "INICIAR SESIÓN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nahuelnahuel@gmail.com\",\r\n    \"password\": \"12345678N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/auth/login",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESETEAR CONTRASEÑA",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmPassword\": \"N123123123\",\r\n    \"newPassword\": \"N123123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/auth/reset-password/:reset_token",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"reset-password",
+								":reset_token"
+							],
+							"variable": [
+								{
+									"key": "reset_token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJyb3duaWVkZWNydXpAZ21haWwuY29tIiwidXNlcklkIjoxLCJpYXQiOjE3NjI4Nzk5NDQsImV4cCI6MTc2Mjg4MDg0NH0.j5nNcNbDYQfGLMELHA418I1ftg9jZbitGMMemraTRb0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/books",
+			"item": [
+				{
+					"name": "LIBROS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/books/search?q=los simpsons&page=1&maxResult=9",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "los simpsons"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "maxResult",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIBRO POR ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/books/:book_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"books",
+								":book_id"
+							],
+							"variable": [
+								{
+									"key": "book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIBROS DE LA DB",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/books?page=1&startIndex=1&maxResults=9",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "startIndex",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/reviews",
+			"item": [
+				{
+					"name": "RESEÑA POR ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/reviews/:review_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								":review_id"
+							],
+							"variable": [
+								{
+									"key": "review_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESEÑAS POR LIBRO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/reviews/book/:book_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"book",
+								":book_id"
+							],
+							"variable": [
+								{
+									"key": "book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESEÑAS POR USUARIO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/reviews/user/:user_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"user",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREAR RESEÑA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"book_id\": 1,\r\n    \"rating\": 5,\r\n    \"content\": \"MUY BUEN LIBRO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/reviews/new-review",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"new-review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESEÑA POR LIBRO Y USUARIO",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nahueldecruz01@gmail.com\",\r\n    \"password\": \"123123123N\"\r\n}"
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/reviews/:user_id/:book_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								":user_id",
+								":book_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "1"
+								},
+								{
+									"key": "book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/users",
+			"item": [
+				{
+					"name": "USER POR ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nahueldecruz01@gmail.com\",\r\n    \"password\": \"123123123N\"\r\n}"
+						},
+						"url": {
+							"raw": "{{LIVRIS_API}}/api/users/:user_id",
+							"host": [
+								"{{LIVRIS_API}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LIVRIS_API}}/api/ping",
+					"host": [
+						"{{LIVRIS_API}}"
+					],
+					"path": [
+						"api",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
