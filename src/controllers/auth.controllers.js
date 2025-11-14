@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken'
 import ENVIRONMENT from '../config/environment.config.js'
 import AuthService from '../services/auth.service.js'
-import { ServerError } from '../utils/customError.utils.js'
 
 class AuthController {
 
