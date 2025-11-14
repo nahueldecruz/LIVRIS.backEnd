@@ -1,5 +1,4 @@
-import serverless from 'serverless-http'
-import express, { request } from 'express'
+import express from 'express'
 import cors from 'cors'
 import authRouter from './routes/auth.route.js'
 import errorHandlerMiddleware from './middlewares/errorHandler.middleware.js'
@@ -33,8 +32,6 @@ app.get('/api/ping', (request, response) => {
 })
 
 app.use(errorHandlerMiddleware)
-    
-export const handler = serverless(app)
 
 app.listen(PORT, () => {
     console.log(`Conexión con el Servidor éxitosa. Puerto: ${PORT}`)
