@@ -33,17 +33,8 @@ app.get('/api/ping', (request, response) => {
 })
 
 app.use(errorHandlerMiddleware)
-
-export const handler = serverless(app, {
-  requestHandler: async (req, res) => {
-    try {
-      return app(req, res)
-    } catch (err) {
-      console.error('ERROR EN FUNCION SERVERLESS:', err)
-      res.status(500).json({ ok: false, error: err.message })
-    }
-  }
-})
+    
+export const handler = serverless(app)
 
 app.listen(PORT, () => {
     console.log(`Conexión con el Servidor éxitosa. Puerto: ${PORT}`)
