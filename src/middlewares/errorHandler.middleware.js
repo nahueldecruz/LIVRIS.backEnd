@@ -32,6 +32,7 @@ function errorHandlerMiddleware(error, request, response, next){
         ok: false,
         status: 500,
         message: 'Error interno del servidor',
+        error: error,
         errors: error.errors || null
     })
 }
