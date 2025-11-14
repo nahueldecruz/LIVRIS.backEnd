@@ -7,20 +7,16 @@ class AuthController {
 
     static async register(request, response, next) {
         try {
-            if (request.method === 'POST') {
-                const { name, email, password } = request.body
-                
-                await AuthService.register({ name, password, email })
-                
-                return response.status(201).json({
-                    ok: true,
-                    status: 201,
-                    message: 'Usuario registrado con éxito'
-                })
-            } else {
-                res.setHeader('Allow', ['POST']);
-                res.status(405).end(`Method ${req.method} Not Allowed`);
-            }
+            const { name, email, password } = request.body
+            
+            await AuthService.register({ name, password, email })
+            
+            return response.status(201).json({
+                ok: true,
+                status: 201,
+                message: 'Usuario registrado con éxito'
+            })
+            
         } catch(error) {
             next(error)
         }
