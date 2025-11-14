@@ -55,11 +55,11 @@ class AuthService {
         if(!userFound){
             throw new ServerError(404, 'Email no registrado')
         } else if(!userFound.verified_email) {
-            throw new ServerError(404, 'Email no verificado')
+            throw new ServerError(401, 'Email no verificado')
         } else {
             const isValid = await bcrypt.compare(password, userFound.password)
             if(!isValid) {
-                throw new ServerError(401, 'Contraseña invalida')
+                throw new ServerError(400, 'Contraseña invalida')
             } else {
                 const authorizationToken = jwt.sign({
                         "_id": userFound._id,
@@ -94,7 +94,7 @@ class AuthService {
         const userFound = await UserRepository.getByEmail(email)
 
         if(!userFound){
-            throw new ServerError(400, 'Email no registrado')
+            throw new ServerError(404, 'Email no registrado')
         }
 
         const resetToken = jwt.sign({

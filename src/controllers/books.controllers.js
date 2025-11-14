@@ -14,7 +14,7 @@ class BooksControllers {
             return response.status(200).json({ 
                 ok: true,
                 status: 200,
-                message: 'Libros obtenidas',
+                message: 'Libros obtenidos',
                 data: {
                     books: booksFound
                 },
@@ -77,7 +77,7 @@ class BooksControllers {
             const bookFound = await BooksService.getById(bookId)
 
             if(!bookFound) {
-                throw new ServerError(401, 'No se encontró al libro')
+                throw new ServerError(404, 'No se encontró al libro')
             }
 
             return response.status(200).json({ 
@@ -98,7 +98,7 @@ class BooksControllers {
             const { book } = request.body
 
             if(!book) {
-                throw new ServerError(404, 'No se recibió ningún libro')
+                throw new ServerError(400, 'No se recibió ningún libro')
             }
 
             const bookSaved = await BooksService.save(book)

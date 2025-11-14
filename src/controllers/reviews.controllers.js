@@ -74,6 +74,7 @@ class ReviewsControllers {
                 return response.status(200).json({
                     ok: false,
                     status: 200,
+                    errorType: "NOT_FOUND",
                     message: 'No se encontró reseña'
                 })
             }
@@ -98,10 +99,10 @@ class ReviewsControllers {
             const reviewCreate = await ReviewsService.create({ userId, bookId, rating, content })
 
             if(!reviewCreate) {
-                throw new ServerError(401, 'No se pudo crear la reseña')
+                throw new ServerError(400, 'No se pudo crear la reseña')
             }
 
-            return response.status(200).json({
+            return response.status(201).json({
                 ok: true,
                 status: 200,
                 message: 'Reseña creada con éxito',

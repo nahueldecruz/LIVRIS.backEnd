@@ -8,7 +8,7 @@ class UsersController {
             const userFound = await UsersService.getById(userId)
 
             if(!userFound) {
-                throw new ServerError(401, 'No se encontró al usuario')
+                throw new ServerError(404, 'No se encontró al usuario')
             }
 
             response.status(200).json({
