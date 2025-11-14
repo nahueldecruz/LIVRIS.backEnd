@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 
 function errorHandlerMiddleware(error, request, response, next){
-    console.error("Lo siguiente es un error")
     console.error(error)
 
     if(error instanceof jwt.TokenExpiredError){
