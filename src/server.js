@@ -7,7 +7,8 @@ import reviewRouter from './routes/reviews.route.js'
 import usersRouter from './routes/users.route.js'
 
 const app = express()
-const PORT = 8080
+
+const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 
