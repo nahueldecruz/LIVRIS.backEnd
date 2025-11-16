@@ -7,6 +7,9 @@ class BooksControllers {
         try {
             const { page = 1, maxResults = 9 } = request.query
             
+            page = Number.isFinite(page) && page > 0 ? page : 1
+            maxResults = Number.isFinite(maxResults) && maxResults > 0 ? maxResults : 9
+
             const startIndex = (page - 1) * maxResults
 
             const booksFound = await BooksService.getAll({ startIndex, maxResults })
