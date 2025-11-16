@@ -1,31 +1,38 @@
 export function joiValidationMiddleware({ body, params, query }) {
   return (request, response, next) => {
     const validationTargets = [
-      { data: request.body, schema: body },
-      { data: request.params, schema: params },
-      { data: request.query, schema: query }
+      { data: request.body, schema: body, location: "body" },
+      { data: request.params, schema: params, location: "params" },
+      { data: request.query, schema: query, location: "query" }
     ]
 
     const errors = {}
 
-    for (const { data, schema } of validationTargets) {
+    for (const { data, schema, location } of validationTargets) {
       if (!schema) continue
 
-      const { error } = schema.validate(data, { abortEarly: false });
+      const { value, error } = schema.validate(data, { 
+        abortEarly: false, 
+        convert: true,
+        stripUnknown: true
+      })
+
       if (error) {
         for (const detail of error.details) {
-          const field = detail.path.join('.')
-          errors[field] = detail.message;
+          const field = detail.path.join(".")
+          errors[field] = detail.message
         }
+      } else {
+        request[location] = value;
       }
     }
 
     if (Object.keys(errors).length > 0) {
-      return response.status(400).json({ 
-        ok: false, 
+      return response.status(400).json({
+        ok: false,
         message: null,
         errors
-     })
+      })
     }
 
     next()
