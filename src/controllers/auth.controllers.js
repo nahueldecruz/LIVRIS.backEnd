@@ -45,8 +45,8 @@ class AuthController {
             const { verification_token: verificationToken } = request.params
 
             await AuthService.verifyEmail(verificationToken)
-
-            return response.redirect(`${ENVIRONMENT.URL_FRONTEND}/verified-email`)
+            
+            return response.redirect(`/${ENVIRONMENT.URL_FRONTEND}/verified-email`)
         } catch(error) {
             next(error)
         }
