@@ -3,7 +3,7 @@ import express from 'express'
 import newReviewSchema from "../schemas/newReview.schema.js";
 import joiValidationMiddleware from '../middlewares/joiValitation.middleware.js'
 
-const reviewRouter = express.Router();
+const reviewRouter = express.Router()
 
 reviewRouter.get("/:review_id", ReviewsControllers.getById)
 reviewRouter.get("/book/:book_id", ReviewsControllers.getByBookId)

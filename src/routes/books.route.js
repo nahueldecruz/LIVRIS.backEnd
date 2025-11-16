@@ -1,7 +1,7 @@
 import BooksControllers from "../controllers/books.controllers.js";
 import express from 'express'
 
-const bookRouter = express.Router();
+const bookRouter = express.Router()
 
 bookRouter.get("/", BooksControllers.getAll)
 bookRouter.get("/search", BooksControllers.getByQuery)
