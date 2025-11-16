@@ -8,14 +8,15 @@ const pool = mysql.createPool({
     database: ENVIRONMENT.MYSQL_DATABASE,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
 })
 
-pool.getConnection()
-.then((connection) => {
-    console.log("Conexión con la DB exitosa!")
-}).catch((error) => {
-    console.error("Error con la conexión con la DB: " + error.message)
-})
+try {
+    await pool.query("SELECT 1");
+    console.log("Conexión con la DB exitosa!");
+} catch (err) {
+    console.error("Error con la conexión: " + err.message);
+}
+
 
 export default pool
