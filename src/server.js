@@ -5,6 +5,7 @@ import errorHandlerMiddleware from './middlewares/errorHandler.middleware.js'
 import bookRouter from './routes/books.route.js'
 import reviewRouter from './routes/reviews.route.js'
 import usersRouter from './routes/users.route.js'
+import ENVIRONMENT from './config/environment.config.js'
 
 const app = express()
 
@@ -12,7 +13,10 @@ const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 
-app.use(cors())
+app.use(cors({
+  origin: ENVIRONMENT.URL_FRONTEND,
+  credentials: true
+}))
 
 app.get('/', (request, response) => { response.send('Bienvenido a la API de LiVris') })
 
