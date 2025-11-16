@@ -33,9 +33,9 @@ class AuthService {
             to: email,
             subject: 'Verificacion de usuario!!',
             html: `
-            <h1>Hola ${name} desde Libris</h1>
-            <span>Este es un email de verificacion.</span>
-            <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar</a>
+                <h1>Hola ${name} desde Libris</h1>
+                <span>Este es un email de verificacion.</span>
+                <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar</a>
             `
         })
     }
