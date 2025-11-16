@@ -1,9 +1,9 @@
 export function joiValidationMiddleware({ body, params, query }) {
   return (request, response, next) => {
     const validationTargets = [
-      { data: request.body, schema: body, location: "body" },
-      { data: request.params, schema: params, location: "params" },
-      { data: request.query, schema: query, location: "query" }
+      { data: request.body, schema: body, location: "bodyValidated" },
+      { data: request.params, schema: params, location: "paramsValidated" },
+      { data: request.query, schema: query, location: "queryValidated" }
     ]
 
     const errors = {}

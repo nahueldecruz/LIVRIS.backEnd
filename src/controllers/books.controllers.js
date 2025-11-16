@@ -5,7 +5,7 @@ class BooksControllers {
     
     static async getAll(request, response, next) {
         try {
-            let { page = 1, maxResults = 9 } = request.query
+            let { page, maxResults } = request.queryValidated
             const startIndex = (page - 1) * maxResults
 
             const booksFound = await BooksService.getAll({ startIndex, maxResults })
