@@ -15,10 +15,10 @@ class BookRepository {
                 ON R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
             GROUP BY B.${BOOKS_TABLE.COLUMNS.ID}
             ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC
-            LIMIT ? OFFSET ?;
+            LIMIT ${Number(startIndex)} OFFSET ${Number(maxResults)};
         `
 
-        const [ books ] = await pool.execute(query, [Number(maxResults), Number(startIndex)])
+        const [ books ] = await pool.execute(query)
 
         return books
     }
