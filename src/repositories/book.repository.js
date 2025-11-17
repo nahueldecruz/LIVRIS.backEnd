@@ -14,8 +14,7 @@ class BookRepository {
             LEFT JOIN ${REVIEWS_TABLE.NAME} R 
                 ON R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
             GROUP BY B.${BOOKS_TABLE.COLUMNS.ID}
-            ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC
-            LIMIT ? OFFSET ?;
+            ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC;
         `
 
         const [ books ] = await pool.execute(query, [maxResults, startIndex])
