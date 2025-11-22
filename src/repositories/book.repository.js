@@ -1,10 +1,11 @@
+import { response } from "express";
 import pool from "../config/mysql.config.js";
 import { BOOKS_TABLE, REVIEWS_TABLE } from "../constants/tables.js";
 
 class BookRepository {
 
     static async getAll({ startIndex, maxResults }) {
-
+        
         const query = `
             SELECT 
                 B.*,
@@ -15,7 +16,7 @@ class BookRepository {
                 ON R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
             GROUP BY B.${BOOKS_TABLE.COLUMNS.ID}
             ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC
-            LIMIT 9 OFFSET 0;
+            LIMIT ? OFFSET ?;
         `
 
         const [ books ] = await pool.execute(query, [maxResults, startIndex])
