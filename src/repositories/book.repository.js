@@ -9,15 +9,12 @@ class BookRepository {
         console.log(typeof(maxResults))
         console.log(startIndex, maxResults)
         const query = `
-            SELECT 
+            SELECT
                 B.*,
-                COALESCE(COUNT(R.${REVIEWS_TABLE.COLUMNS.ID}), 0) AS reviewsCount,
-                COALESCE(ROUND(AVG(R.${REVIEWS_TABLE.COLUMNS.RATING}), 1), 0) AS ratingAverage
-            FROM ${BOOKS_TABLE.NAME} B
-            LEFT JOIN ${REVIEWS_TABLE.NAME} R 
-                ON R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
-            GROUP BY B.${BOOKS_TABLE.COLUMNS.ID}
-            ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC
+                (SELECT COUNT(*) FROM Reviews R WHERE R.book_id = B._id) AS reviewsCount,
+                (SELECT ROUND(AVG(R.rating), 1) FROM Reviews R WHERE R.book_id = B._id) AS ratingAverage
+            FROM Books B
+            ORDER BY B.created_at ASC
             LIMIT ? OFFSET ?;
         `
 
