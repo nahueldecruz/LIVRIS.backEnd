@@ -8,7 +8,7 @@ class BooksControllers {
             let { page, maxResults } = request.queryValidated
             const startIndex = (page - 1) * maxResults
             console.log(request.query)
-            console.log(queryValidated)
+            console.log(request.queryValidated)
             if (!page || !maxResults) {
                 return response.status(400).json({ ok: false, msg: "Falta un parámetro de búsqueda" })
             }
