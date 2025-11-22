@@ -5,7 +5,9 @@ import { BOOKS_TABLE, REVIEWS_TABLE } from "../constants/tables.js";
 class BookRepository {
 
     static async getAll({ startIndex, maxResults }) {
-        
+        console.log(typeof(startIndex))
+        console.log(typeof(maxResults))
+        console.log(startIndex, maxResults)
         const query = `
             SELECT 
                 B.*,
