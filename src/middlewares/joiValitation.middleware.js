@@ -14,7 +14,7 @@ export function joiValidationMiddleware({ body, params, query }) {
       const { value, error } = schema.validate(data, { 
         abortEarly: false, 
         convert: true,
-        stripUnknown: true
+        stripUnknown: location === "bodyValidated"
       })
 
       if (error) {
