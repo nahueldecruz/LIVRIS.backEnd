@@ -8,7 +8,7 @@ class BooksService {
 
         return booksFound
     }
-    
+
     static async searchGoogleBooks({ query, startIndex, maxResults }) {
         try {
             const responseHttp = await fetch(`${ENVIRONMENT.URL_API_GOOGLE_BOOKS}?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${maxResults}`)
