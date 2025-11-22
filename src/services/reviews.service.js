@@ -53,6 +53,16 @@ class ReviewsService {
 
         return reviewCreated
     }
+
+    static async updateById({ reviewId, newValues }) {
+        const reviewsUpdated = await ReviewRepository.updateById({ reviewId, newValues })
+        
+        return reviewsUpdated
+    }
+
+    static async softDeleteById(reviewId) {
+
+    }
 }
 
 export default ReviewsService

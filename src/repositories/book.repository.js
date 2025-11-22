@@ -15,10 +15,10 @@ class BookRepository {
                 (SELECT ROUND(AVG(R.rating), 1) FROM Reviews R WHERE R.book_id = B._id) AS ratingAverage
             FROM Books B
             ORDER BY B.created_at ASC
-            LIMIT ? OFFSET ?;
+            LIMIT ${maxResults} OFFSET ${startIndex};
         `
 
-        const [ books ] = await pool.execute(query, [maxResults, startIndex])
+        const [ books ] = await pool.execute(query)
 
         return books
     }

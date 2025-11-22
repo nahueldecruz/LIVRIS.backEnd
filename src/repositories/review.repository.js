@@ -105,6 +105,37 @@ class ReviewRepository {
     
         return reviewCreated
     }
+
+    static async updateById({ reviewId, newValues }) {
+        const fields = Object.keys(newValues)
+        const values = Object.values(newValues)
+
+        if (fields.length === 0){
+            return null
+        }
+
+        const fieldsString = fields.map(field => `${field} = ?`).join(', ')
+
+        const query = `
+            UPDATE ${USERS_TABLE.NAME} 
+            SET ${fieldsString} 
+            WHERE ${USERS_TABLE.COLUMNS.ID} = ?
+            AND ${USERS_TABLE.COLUMNS.IS_ACTIVE} = 1
+        `
+
+        const [result] = await pool.execute(query, [...values, reviewId])
+
+        if (result.affectedRows === 0){
+             return null
+        }
+        
+        const reviewUpdated = await ReviewRepository.getById(reviewId)
+        return reviewUpdated
+    }
+
+    static async softDeleteById(reviewId) {
+
+    }
 }
 
 export default ReviewRepository

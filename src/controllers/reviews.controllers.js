@@ -104,7 +104,7 @@ class ReviewsControllers {
 
             return response.status(201).json({
                 ok: true,
-                status: 200,
+                status: 201,
                 message: 'Reseña creada con éxito',
                 data: {
                     review: reviewCreate
@@ -114,6 +114,54 @@ class ReviewsControllers {
             next(error)
         }
     }
-}
 
+    static async updateById(request, response, next) {
+        try {
+            const { review_id: reviewId } = request.params
+            const { rating, content } = request.body
+
+            const newValues = {
+                rating,
+                content
+            }
+
+            const reviewUpdated = await ReviewsService.updateById({ reviewId, newValues})
+
+            if(!reviewCreate) {
+                throw new ServerError(400, 'No se pudo editar la reseña')
+            }
+
+            return response.status(200).json({
+                ok: true,
+                status: 200,
+                message: 'Reseña editada con éxito',
+                data: {
+                    review: reviewUpdated
+                },
+            })
+        } catch(error) {
+            next(error)
+        }
+    }
+    
+    static async softDeleteById(request, response, next) {
+        try {
+            const { review_id: reviewId } = request.params
+            
+            const isReviewDeleted = await ReviewsService.updateById(reviewId)
+
+            if(!isReviewDeleted) {
+                throw new ServerError(400, 'No se pudo eliminar la reseña')
+            }
+
+            return response.status(200).json({
+                ok: true,
+                status: 200,
+                message: 'Reseña eliminada con éxito'
+            })
+        } catch(error) {
+            next(error)
+        }
+    }
+}
 export default ReviewsControllers
