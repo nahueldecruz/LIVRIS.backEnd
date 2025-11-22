@@ -8,6 +8,10 @@ class BooksControllers {
             let { page, maxResults } = request.queryValidated
             const startIndex = (page - 1) * maxResults
 
+            if (!page || !maxResults) {
+                return response.status(400).json({ ok: false, msg: "Falta un parámetro de búsqueda" })
+            }
+
             const booksFound = await BooksService.getAll({ startIndex, maxResults })
 
             return response.status(200).json({ 

@@ -2,6 +2,13 @@ import ENVIRONMENT from "../config/environment.config.js"
 import BookRepository from "../repositories/book.repository.js"
 
 class BooksService {
+
+    static async getAll({ startIndex, maxResults }) {
+        const booksFound = await BookRepository.getAll({ startIndex, maxResults })
+
+        return booksFound
+    }
+    
     static async searchGoogleBooks({ query, startIndex, maxResults }) {
         try {
             const responseHttp = await fetch(`${ENVIRONMENT.URL_API_GOOGLE_BOOKS}?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=${maxResults}`)
@@ -16,12 +23,6 @@ class BooksService {
         } catch(error) {
             throw error
         }
-    }
-
-    static async getAll({ startIndex, maxResults }) {
-        const booksFound = await BookRepository.getAll({ startIndex, maxResults })
-
-        return booksFound
     }
 
     static async getById(bookId) {
