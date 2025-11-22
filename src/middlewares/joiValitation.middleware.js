@@ -9,10 +9,13 @@ export function joiValidationMiddleware({ body, params, query }) {
     const errors = {}
 
     for (const { data, schema, location } of validationTargets) {
-      if (!schema) continue
+      if (!schema) {
+        request[location] = data
+        continue
+      }
 
       const { value, error } = schema.validate(data, { 
-        abortEarly: false, 
+        abortEarly: false,
         convert: true,
         stripUnknown: location === "bodyValidated"
       })
@@ -23,7 +26,7 @@ export function joiValidationMiddleware({ body, params, query }) {
           errors[field] = detail.message
         }
       } else {
-        request[location] = value;
+        request[location] = value
       }
     }
 
@@ -34,7 +37,7 @@ export function joiValidationMiddleware({ body, params, query }) {
         errors
       })
     }
-
+    
     next()
   }
 }
