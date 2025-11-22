@@ -60,6 +60,7 @@ export const REVIEWS_TABLE = {
         FK_BOOK_ID: 'book_id',
         RATING: 'rating',
         CONTENT: 'content',
+        IS_EDITED: 'is_edited',
         CREATED_AT: 'created_at',
         UPDATED_AT: 'updated_at',
         IS_ACTIVE: 'is_active'

@@ -119,7 +119,6 @@ class ReviewsControllers {
         try {
             const { review_id: reviewId } = request.params
             const { rating, content } = request.body
-
             const newValues = {
                 rating,
                 content
@@ -127,7 +126,7 @@ class ReviewsControllers {
 
             const reviewUpdated = await ReviewsService.updateById({ reviewId, newValues})
 
-            if(!reviewCreate) {
+            if(!reviewUpdated) {
                 throw new ServerError(400, 'No se pudo editar la reseña')
             }
 
@@ -148,7 +147,7 @@ class ReviewsControllers {
         try {
             const { review_id: reviewId } = request.params
             
-            const isReviewDeleted = await ReviewsService.updateById(reviewId)
+            const isReviewDeleted = await ReviewsService.softDeleteById(reviewId)
 
             if(!isReviewDeleted) {
                 throw new ServerError(400, 'No se pudo eliminar la reseña')

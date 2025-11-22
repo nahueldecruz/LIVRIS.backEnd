@@ -6,6 +6,7 @@ const BOOK_USER_REVIEW_SELECT = `
     R.${REVIEWS_TABLE.COLUMNS.CONTENT} AS review_content,
     R.${REVIEWS_TABLE.COLUMNS.RATING} AS review_rating,
     R.${REVIEWS_TABLE.COLUMNS.CREATED_AT} AS review_created_at,
+    R.${REVIEWS_TABLE.COLUMNS.IS_EDITED} AS review_is_edited,
 
     R.${REVIEWS_TABLE.COLUMNS.FK_USER_ID} AS user_id,
     R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} AS book_id,
@@ -91,10 +92,10 @@ class ReviewRepository {
 
         const query = `
             INSERT INTO ${REVIEWS_TABLE.NAME} (
-            ${REVIEWS_TABLE.COLUMNS.FK_USER_ID},
-            ${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID},
-            ${REVIEWS_TABLE.COLUMNS.RATING},
-            ${REVIEWS_TABLE.COLUMNS.CONTENT}
+                ${REVIEWS_TABLE.COLUMNS.FK_USER_ID},
+                ${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID},
+                ${REVIEWS_TABLE.COLUMNS.RATING},
+                ${REVIEWS_TABLE.COLUMNS.CONTENT}
             )
             VALUES (?, ?, ?, ?);
         `
@@ -117,16 +118,16 @@ class ReviewRepository {
         const fieldsString = fields.map(field => `${field} = ?`).join(', ')
 
         const query = `
-            UPDATE ${USERS_TABLE.NAME} 
-            SET ${fieldsString} 
-            WHERE ${USERS_TABLE.COLUMNS.ID} = ?
-            AND ${USERS_TABLE.COLUMNS.IS_ACTIVE} = 1
+            UPDATE ${REVIEWS_TABLE.NAME} 
+            SET ${fieldsString}, is_edited = TRUE
+            WHERE ${REVIEWS_TABLE.COLUMNS.ID} = ?
+            AND ${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = 1
         `
 
         const [result] = await pool.execute(query, [...values, reviewId])
 
         if (result.affectedRows === 0){
-             return null
+            return null
         }
         
         const reviewUpdated = await ReviewRepository.getById(reviewId)
@@ -134,7 +135,20 @@ class ReviewRepository {
     }
 
     static async softDeleteById(reviewId) {
+        const query = `
+            UPDATE ${REVIEWS_TABLE.NAME} 
+            SET ${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = FALSE
+            WHERE ${REVIEWS_TABLE.COLUMNS.ID} = ?
+            AND ${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = TRUE
+        `
 
+        const [result] = await pool.execute(query, [reviewId])
+
+        if (result.affectedRows === 0){
+            return null
+        }
+
+        return true
     }
 }
 

@@ -11,10 +11,20 @@ class BookRepository {
         const query = `
             SELECT
                 B.*,
-                (SELECT COUNT(*) FROM Reviews R WHERE R.book_id = B._id) AS reviewsCount,
-                (SELECT ROUND(AVG(R.rating), 1) FROM Reviews R WHERE R.book_id = B._id) AS ratingAverage
-            FROM Books B
-            ORDER BY B.created_at ASC
+                (
+                    SELECT COUNT(*)
+                    FROM ${REVIEWS_TABLE.NAME} R
+                    WHERE R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
+                    AND R.${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = TRUE
+                ) AS reviewsCount,
+                (
+                    SELECT ROUND(AVG(R.${REVIEWS_TABLE.COLUMNS.RATING}), 1)
+                    FROM ${REVIEWS_TABLE.NAME} R
+                    WHERE R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
+                    AND R.${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = TRUE
+                )AS ratingAverage
+            FROM ${BOOKS_TABLE.NAME} B
+            ORDER BY B.${BOOKS_TABLE.COLUMNS.CREATED_AT} ASC
             LIMIT ${maxResults} OFFSET ${startIndex};
         `
 
@@ -53,6 +63,7 @@ class BookRepository {
             FROM ${BOOKS_TABLE.NAME} B
             LEFT JOIN ${REVIEWS_TABLE.NAME} R 
                 ON R.${REVIEWS_TABLE.COLUMNS.FK_BOOK_ID} = B.${BOOKS_TABLE.COLUMNS.ID}
+                AND R.${REVIEWS_TABLE.COLUMNS.IS_ACTIVE} = TRUE
             WHERE B.${BOOKS_TABLE.COLUMNS.ID} = ?
             GROUP BY B.${BOOKS_TABLE.COLUMNS.ID};
         `

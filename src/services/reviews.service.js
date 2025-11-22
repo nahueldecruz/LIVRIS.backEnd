@@ -61,7 +61,7 @@ class ReviewsService {
     }
 
     static async softDeleteById(reviewId) {
-
+        return await ReviewRepository.softDeleteById(reviewId)
     }
 }
 

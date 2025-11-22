@@ -1,9 +1,9 @@
-import ReviewsService from "../services/reviews.service";
+import ReviewsService from "../services/reviews.service.js";
 
 export const isReviewOwner = async (request, res, next) => {
-    const reviewId = request.params.id
-    const userId = request.user.id
-
+    const { review_id: reviewId } = request.params
+    const userId = request.user._id
+    
     const review = await ReviewsService.getById(reviewId)
 
     if (!review) {
