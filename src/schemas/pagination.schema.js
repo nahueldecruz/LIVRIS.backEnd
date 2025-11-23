@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const booksQuerySchema = Joi.object({
+const paginationSchema = Joi.object({
     page: Joi.number()
         .integer()
         .min(1)
@@ -23,4 +23,4 @@ const booksQuerySchema = Joi.object({
 })
 .options({ convert: true, stripUnknown: true });
 
-export default booksQuerySchema
+export default paginationSchema

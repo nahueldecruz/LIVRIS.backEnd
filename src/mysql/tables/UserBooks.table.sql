@@ -10,3 +10,6 @@ CREATE TABLE User_Books (
     FOREIGN KEY (book_id) REFERENCES books(_id)
         ON UPDATE CASCADE ON DELETE CASCADE
 )
+
+ALTER TABLE User_Books
+ADD UNIQUE KEY user_book_unique (user_id, book_id);

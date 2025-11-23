@@ -69,7 +69,7 @@ class AuthService {
                     },
                     ENVIRONMENT.JWT_VERIFICATION_SECRET_KEY,
                     {
-                        expiresIn: '1d'
+                        expiresIn: '7d'
                     }
                 )
 

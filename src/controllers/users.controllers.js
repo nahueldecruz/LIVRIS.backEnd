@@ -24,6 +24,31 @@ class UsersController {
             next(error)
         }
     }
+
+    static async searchUsers(request, response, next) {
+        try {
+            const { search, page = 1, maxResults = 12 } = request.query
+            const startIndex = (page - 1) * maxResults
+            
+            if (!search || !page || !maxResults) {
+                return response.status(400).json({ ok: false, message: "Falta un parámetro de búsqueda" })
+            }
+
+            const usersFound = await UsersService.searchUsers({ search, maxResults, startIndex })
+
+            response.status(200).json({
+                ok: true,
+                status: 200,
+                message: 'Usuarios obtenidos',
+                data: {
+                    users: usersFound
+                }
+            })
+
+        } catch(error) {
+            next(error)
+        }
+    }
 }
 
 export default UsersController

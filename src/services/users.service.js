@@ -17,6 +17,12 @@ class UsersService {
 
         return user
     }
+
+    static async searchUsers({ search, maxResults, startIndex }) {
+        const usersFound = await UserRepository.searchUsers({ search, maxResults, startIndex })
+
+        return usersFound
+    }
 }
 
 export default UsersService

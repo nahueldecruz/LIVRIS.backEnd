@@ -9,7 +9,7 @@ class BooksControllers {
             const startIndex = (page - 1) * maxResults
             
             if (!page || !maxResults) {
-                return response.status(400).json({ ok: false, msg: "Falta un parámetro de búsqueda" })
+                return response.status(400).json({ ok: false, message: "Falta un parámetro de búsqueda" })
             }
 
             const booksFound = await BooksService.getAll({ startIndex, maxResults })
@@ -33,7 +33,7 @@ class BooksControllers {
             const startIndex = (page - 1) * maxResults
             
             if (!query || !page || !maxResults) {
-                return response.status(400).json({ ok: false, msg: "Falta un parámetro de búsqueda" })
+                return response.status(400).json({ ok: false, message: "Falta un parámetro de búsqueda" })
             }
             
             const responseData = await BooksService.searchGoogleBooks({ query, startIndex, maxResults})

@@ -48,6 +48,26 @@ class UserRepository {
         return userFound || null
     }
 
+    static async searchUsers({ search, maxResults, startIndex }) {
+        const like = `%${search}%`
+
+        const query = `
+            SELECT 
+                ${USERS_TABLE.COLUMNS.ID},
+                ${USERS_TABLE.COLUMNS.NAME},
+                ${USERS_TABLE.COLUMNS.EMAIL},
+                ${USERS_TABLE.COLUMNS.CREATED_AT}
+            FROM ${USERS_TABLE.NAME}
+            WHERE 
+                (${USERS_TABLE.COLUMNS.NAME} LIKE ? OR ${USERS_TABLE.COLUMNS.EMAIL} LIKE ?)
+                AND ${USERS_TABLE.COLUMNS.IS_ACTIVE} = TRUE
+            ORDER BY ${USERS_TABLE.COLUMNS.NAME} ASC
+            LIMIT ${maxResults} OFFSET ${startIndex};
+        `
+
+        const [ users ] = await pool.execute(query, [like, like])
+        return users
+    }
 
     static async create({ name, email, password }){
         const query = `
