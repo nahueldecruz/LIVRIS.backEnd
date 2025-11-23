@@ -27,8 +27,9 @@ class AuthService {
                 expiresIn: '1d'
             }
         )
-        console.log(verificationToken)
-        console.log(ENVIRONMENT.URL_API)
+
+        console.log(ENVIRONMENT.GMAIL_USER)
+        console.log(email)
 
         await transporter.sendMail({
             from: ENVIRONMENT.GMAIL_USER,
