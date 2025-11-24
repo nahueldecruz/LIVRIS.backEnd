@@ -12,7 +12,8 @@ const ENVIRONMENT = {
     JWT_RESET_SECRET_KEY: process.env.JWT_RESET_SECRET_KEY,
     URL_API: process.env.URL_API,
     URL_FRONTEND: process.env.URL_FRONTEND,
-    URL_API_GOOGLE_BOOKS: process.env.URL_API_GOOGLE_BOOKS
+    URL_API_GOOGLE_BOOKS: process.env.URL_API_GOOGLE_BOOKS,
+    RESEND_API_KEY: process.env.RESEND_API_KEY
 }
 
 export default ENVIRONMENT

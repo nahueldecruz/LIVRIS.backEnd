@@ -31,7 +31,7 @@ class AuthService {
         console.log(ENVIRONMENT.GMAIL_USER)
         console.log(email)
 
-        await transporter.sendMail({
+        /* await transporter.sendMail({
             from: ENVIRONMENT.GMAIL_USER,
             to: email,
             subject: 'Verificacion de usuario!!',
@@ -40,7 +40,17 @@ class AuthService {
                 <span>Este es un email de verificacion.</span>
                 <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar</a>
             `
-        })
+        }) */
+        await resend.emails.send({
+            from: "LiVris <no-reply@livris.com>",
+            to: email,
+            subject: "Verificación de usuario",
+            html: `
+                <h1>Hola ${name} desde LiVris</h1>
+                <p>Este es un email de verificación.</p>
+                <a href="${verificationUrl}">Verificar email</a>
+            `
+        });
     }
 
     static async verifyEmail(verificationToken){
