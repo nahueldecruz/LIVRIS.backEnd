@@ -1,9 +1,9 @@
 import UserRepository from "../repositories/user.repository.js"
 import { ServerError } from "../utils/customError.utils.js"
 import bcrypt from 'bcrypt'
-import transporter from '../config/mailer.config.js'
 import jwt from 'jsonwebtoken'
 import ENVIRONMENT from "../config/environment.config.js"
+import resend from "../config/resend.config.js"
 
 class AuthService {
     static async register ({ name, password, email }){
@@ -28,29 +28,16 @@ class AuthService {
             }
         )
 
-        console.log(ENVIRONMENT.GMAIL_USER)
-        console.log(email)
-
-        /* await transporter.sendMail({
-            from: ENVIRONMENT.GMAIL_USER,
-            to: email,
-            subject: 'Verificacion de usuario!!',
-            html: `
-                <h1>Hola ${name} desde Libris</h1>
-                <span>Este es un email de verificacion.</span>
-                <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar</a>
-            `
-        }) */
         await resend.emails.send({
-            from: "LiVris <no-reply@livris.com>",
+            from: "LiVris <onboarding@resend.dev>",
             to: email,
             subject: "Verificación de usuario",
             html: `
                 <h1>Hola ${name} desde LiVris</h1>
                 <p>Este es un email de verificación.</p>
-                <a href="${verificationUrl}">Verificar email</a>
+                <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar email</a>
             `
-        });
+        })
     }
 
     static async verifyEmail(verificationToken){
@@ -119,14 +106,15 @@ class AuthService {
                 expiresIn: '15m'
             }
         )
-        await transporter.sendMail({
-            from: ENVIRONMENT.GMAIL_USER,
+
+        await resend.emails.send({
+            from: "LiVris <onboarding@resend.dev>",
             to: email,
-            subject: 'Email de recuperación de contraseña!!',
+            subject: "Email de recuperación de contraseña!!",
             html: `
-            <h1>Hola ${userFound.name} desde Libris</h1>
-            <span>Has click en el link para cambiar la contraseña.</span>
-            <a href="${ENVIRONMENT.URL_FRONTEND}/reset-password/${resetToken}">Verificar</a>
+                <h1>Hola ${userFound.name} desde Libris</h1>
+                <span>Has click en el link para cambiar la contraseña.</span>
+                <a href="${ENVIRONMENT.URL_FRONTEND}/reset-password/${resetToken}">Verificar</a>
             `
         })
     }
