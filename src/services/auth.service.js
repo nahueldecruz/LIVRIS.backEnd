@@ -29,7 +29,7 @@ class AuthService {
         )
 
         await resend.emails.send({
-            from: "LiVris <onboarding@resend.dev>",
+            from: "LiVris <nahuelagustintest@gmail.com>",
             to: email,
             subject: "Verificación de usuario",
             html: `
@@ -108,7 +108,7 @@ class AuthService {
         )
 
         await resend.emails.send({
-            from: "LiVris <onboarding@resend.dev>",
+            from: "LiVris <nahuelagustintest@gmail.com>",
             to: email,
             subject: "Email de recuperación de contraseña!!",
             html: `
