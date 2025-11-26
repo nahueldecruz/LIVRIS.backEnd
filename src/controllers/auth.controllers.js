@@ -8,7 +8,7 @@ class AuthController {
             const { name, email, password } = request.body
             
             await AuthService.register({ name, password, email })
-            console.log("se mando el email")
+            
             return response.status(201).json({
                 ok: true,
                 status: 201,

@@ -3,7 +3,9 @@ import { ServerError } from "../utils/customError.utils.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import ENVIRONMENT from "../config/environment.config.js"
-import resend from "../config/resend.config.js"
+import transporter from '../config/email/mailer.config.js'
+import getForgotPassword from "../config/email/forgotPassword.html.js"
+import getVerifyEmailHTML from "../config/email/verifyEmail.html.js"
 
 class AuthService {
     static async register ({ name, password, email }){
@@ -28,15 +30,13 @@ class AuthService {
             }
         )
 
-        await resend.emails.send({
-            from: "LiVris <nahuelagustintest@gmail.com>",
+        const route = `${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}`
+
+        await transporter.sendMail({
+            from: `"LiVris" <${ENVIRONMENT.GMAIL_USER}>`,
             to: email,
             subject: "Verificación de usuario",
-            html: `
-                <h1>Hola ${name} desde LiVris</h1>
-                <p>Este es un email de verificación.</p>
-                <a href="${ENVIRONMENT.URL_API}/api/auth/verify-email/${verificationToken}">Verificar email</a>
-            `
+            html: getVerifyEmailHTML(name, route)
         })
     }
 
@@ -107,15 +107,13 @@ class AuthService {
             }
         )
 
-        await resend.emails.send({
-            from: "LiVris <nahuelagustintest@gmail.com>",
+        const route = `${ENVIRONMENT.URL_FRONTEND}/reset-password/${resetToken}`
+
+        await transporter.sendMail({
+            from: `"LiVris" <${ENVIRONMENT.GMAIL_USER}>`,
             to: email,
-            subject: "Email de recuperación de contraseña!!",
-            html: `
-                <h1>Hola ${userFound.name} desde Libris</h1>
-                <span>Has click en el link para cambiar la contraseña.</span>
-                <a href="${ENVIRONMENT.URL_FRONTEND}/reset-password/${resetToken}">Verificar</a>
-            `
+            subject: "Verificación de usuario",
+            html: getForgotPassword(userFound.name, route)
         })
     }
 
