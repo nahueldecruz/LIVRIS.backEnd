@@ -14,9 +14,15 @@ class UserBookService {
     }
 
     static async getBooksByUserIdAndStatus({ status, userId }) {
-        const statusFound = await UserBookRepository.getBooksByUserIdAndStatus({ userId, status })
+        const booksByStatus = await UserBookRepository.getBooksByUserIdAndStatus({ userId, status })
 
-        return statusFound
+        return booksByStatus
+    }
+
+    static async deleteById(userBookId) {
+        const isUserBookDeleted = await UserBookRepository.deleteById(userBookId)
+
+        return isUserBookDeleted
     }
 }
 

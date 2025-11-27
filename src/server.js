@@ -6,6 +6,7 @@ import bookRouter from './routes/books.route.js'
 import reviewRouter from './routes/reviews.route.js'
 import usersRouter from './routes/users.route.js'
 import ENVIRONMENT from './config/environment.config.js'
+import userBookRouter from './routes/user_book.route.js'
 
 const app = express()
 
@@ -27,6 +28,8 @@ app.use('/api/books', bookRouter)
 app.use('/api/reviews', reviewRouter)
 
 app.use('/api/users', usersRouter)
+
+app.use('/api/user_book', userBookRouter)
 
 app.get('/api/ping', (request, response) => { 
     return response.status(200).json({

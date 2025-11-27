@@ -9,7 +9,7 @@ const usersRouter = express.Router()
 
 usersRouter.use(authMiddleware)
 usersRouter.get("/search", joiValidationMiddleware({ query: paginationSchema }), UsersController.searchUsers)
-usersRouter.get("/books-status", UserBookControllers.getBooksByUserIdAndStatus)
+usersRouter.get("/:user_id/books/:status", UserBookControllers.getBooksByUserIdAndStatus)
 usersRouter.get("/:user_id", UsersController.getById)
 
 export default usersRouter

@@ -95,6 +95,21 @@ class UserBookRepository {
 
         return statusUserBook
     }
+
+    static async deleteById(userBookId) {
+        const query = `
+            DELETE FROM ${USER_BOOKS_TABLE.NAME}
+            WHERE ${USER_BOOKS_TABLE.COLUMNS.ID} = ?
+        `
+
+        const [result] = await pool.execute(query, [userBookId])
+
+        if (result.affectedRows === 0){
+            return null
+        }
+
+        return true
+    }
 }
 
 export default UserBookRepository

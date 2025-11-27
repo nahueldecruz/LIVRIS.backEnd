@@ -45,18 +45,38 @@ class UserBookControllers {
 
     static async getBooksByUserIdAndStatus(request, response, next) {
         try {
-            const { status } = request.body
-            const userId = request.user._id
 
-            const statusFound = await UserBookService.getBooksByUserIdAndStatus({ status, userId })
+            const { user_id: userId, status } = request.params
+            
+            const booksByStatus = await UserBookService.getBooksByUserIdAndStatus({ status, userId })
 
             return response.status(200).json({
                 ok: true,
                 status: 200,
                 message: `Lista de libros con estado "${status}"`,
                 data: {
-                    status: statusFound
+                    books: booksByStatus
                 }
+            })
+        } catch(error) {
+            next(error)
+        }
+    }
+
+    static async deleteById(request, response, next) {
+        try {
+            const { user_book_id: userBookId } = request.params
+            
+            const isUserBookDeleted = await UserBookService.deleteById(userBookId)
+
+            if(!isUserBookDeleted) {
+                throw new ServerError(400, 'No se pudo eliminar el libro de la lista')
+            }
+
+            return response.status(200).json({
+                ok: true,
+                status: 200,
+                message: 'Libro eliminado de la lista'
             })
         } catch(error) {
             next(error)
